@@ -1,7 +1,7 @@
-import 'package:widgets_lesson/res/res.dart';
+import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:widgets_lesson/res/app_icons.dart';
+import 'package:FlutterGalleryApp/res/app_icons.dart';
 
 import 'feed_screen.dart';
 
