@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/feed_screen.dart';
+import 'package:widgets_lesson/screens/Home.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Feed(),
+      home: Home(),
     );
   }
 }

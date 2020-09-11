@@ -17,6 +17,8 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  String tag;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _FeedState extends State<Feed> {
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return Column(children: <Widget>[
-              _buildItem(),
+              _buildItem(index),
               Divider(
                 thickness: 2,
                 color: AppColors.mercury,
@@ -34,7 +36,7 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  Widget _buildItem() {
+  Widget _buildItem(int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -43,11 +45,22 @@ class _FeedState extends State<Feed> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        FullScreenImage(photo: kFlutterDash)));
+                    builder: (context) => FullScreenImage(
+                          photo: kFlutterDash,
+                          heroTag: 'tag$index',
+                          userPhoto:
+                              'https://skill-branch.ru/img/speakers/Adechenko.jpg',
+                          altDescription: 'This is Flutter Dash. I love him :)',
+                          name: 'Kirill Adeshchenko',
+                          userName: 'kaparray',
+                        )));
+            //print('tag$index');
           },
-          child: Photo(
-            photoLink: kFlutterDash,
+          child: Hero(
+            tag: 'tag$index',
+            child: Photo(
+              photoLink: kFlutterDash,
+            ),
           ),
         ),
         _buildPhotoMeta(),
