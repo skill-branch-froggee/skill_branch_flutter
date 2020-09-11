@@ -1,4 +1,4 @@
-# widgets_lesson
+# galleryapp
 
 A new Flutter application.
 
