@@ -36,11 +36,10 @@ class FullScreenImageState extends State<FullScreenImage>
   void initState() {
     super.initState();
 
-    _controller =
-        AnimationController(duration: Duration(milliseconds: 1500), vsync: this)
-          ..forward();
-    //_controller = Tween(begin: 0, end: 1.0).animate(_controller);
-    //_playAnimation();
+    _controller = AnimationController(
+        duration: Duration(milliseconds: 5500), vsync: this);
+
+    _playAnimation();
   }
 
   @override
@@ -49,19 +48,20 @@ class FullScreenImageState extends State<FullScreenImage>
     super.dispose();
   }
 
-/*
   Future<void> _playAnimation() async {
     try {
       await _controller.forward().orCancel;
-    //  await _controller.reverse().orCancel;
+
+      //  await _controller.reverse().orCancel;
     } on TickerCanceled {
       //анимация была отменена, тк была уничтожена
     }
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     // print(widget.heroTag);
+
     return Scaffold(
       appBar: _buildAppBar(context),
       body: Padding(
@@ -171,10 +171,10 @@ class StaggerAnimation extends StatelessWidget {
       this.name,
       this.userName,
       this.userPhoto})
-      : opacityUserAvatar = Tween<double>(begin: 0, end: 1).animate(
+      : opacityUserAvatar = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animationController,
-            curve: Interval(0.0, 0.5, curve: Curves.ease),
+            curve: Interval(0.0, .5, curve: Curves.ease),
           ),
         ),
         opacityText = Tween<double>(begin: 0, end: 1.0).animate(
@@ -184,8 +184,25 @@ class StaggerAnimation extends StatelessWidget {
           ),
         ),
         super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      builder: _buildPhotoMetaData,
+      animation: animationController,
+    );
+  }
+
+  Widget _buildPhotoMetaData(BuildContext context, Widget child) {
+    /*
+    double a, b, c, d;
+    a = animationController.value;
+    b = opacityUserAvatar.value;
+    print('$a - OpacityUserAvatar $b');
+    c = animationController.value;
+    d = opacityText.value;
+    print('$c - opacityText $d');
+*/
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
@@ -204,14 +221,15 @@ class StaggerAnimation extends StatelessWidget {
                 child: UserAvatar(userPhoto),
               ),
               SizedBox(width: 6),
-              AnimatedBuilder(
-                animation: animationController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: opacityText.value,
-                    child: child,
-                  );
-                },
+              //        AnimatedBuilder(
+              //        animation: animationController,
+              //      builder: (context, child) {
+              //      return
+              Opacity(
+                opacity: opacityText.value,
+                //        child: child,
+                //     );
+                //   },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
