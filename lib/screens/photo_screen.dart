@@ -194,6 +194,7 @@ class StaggerAnimation extends StatelessWidget {
   }
 
   Widget _buildPhotoMetaData(BuildContext context, Widget child) {
+    // ghjdthrf pyfxtybq
     /*
     double a, b, c, d;
     a = animationController.value;

@@ -64,7 +64,7 @@ class BottomNavyBar extends StatelessWidget {
       this.onItemSelected,
       this.currentTab,
       this.animaitionDuration = const Duration(milliseconds: 270),
-      this.itemCornerRadius = 25,
+      this.itemCornerRadius = 24,
       this.curve})
       : super(key: key);
 
