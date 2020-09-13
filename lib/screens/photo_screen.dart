@@ -11,7 +11,7 @@ class FullScreenImage extends StatefulWidget {
       this.name = '',
       this.userName = '',
       Key key,
-      this.heroTag = 'tag0',
+      this.heroTag = '',
       this.userPhoto = ''})
       : super(key: key);
 
@@ -174,7 +174,7 @@ class StaggerAnimation extends StatelessWidget {
       : opacityUserAvatar = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animationController,
-            curve: Interval(0.0, .5, curve: Curves.ease),
+            curve: Interval(0.0, 0.5, curve: Curves.ease),
           ),
         ),
         opacityText = Tween<double>(begin: 0, end: 1.0).animate(
@@ -195,15 +195,14 @@ class StaggerAnimation extends StatelessWidget {
 
   Widget _buildPhotoMetaData(BuildContext context, Widget child) {
     // ghjdthrf pyfxtybq
-    /*
-    double a, b, c, d;
-    a = animationController.value;
-    b = opacityUserAvatar.value;
-    print('$a - OpacityUserAvatar $b');
-    c = animationController.value;
-    d = opacityText.value;
-    print('$c - opacityText $d');
-*/
+
+    // double a, b, c, d;
+    //   a = animationController.value;
+    //   b = opacityUserAvatar.value;
+    //   print('$a - OpacityUserAvatar $b');
+    //  c = animationController.value;
+    // d = opacityText.value;
+    //print('$c - opacityText $d');
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
@@ -211,26 +210,13 @@ class StaggerAnimation extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              AnimatedBuilder(
-                animation: animationController,
-                builder: (context, child) {
-                  return FadeTransition(
-                    opacity: opacityUserAvatar,
-                    child: child,
-                  );
-                },
+              FadeTransition(
+                opacity: opacityUserAvatar,
                 child: UserAvatar(userPhoto),
               ),
               SizedBox(width: 6),
-              //        AnimatedBuilder(
-              //        animation: animationController,
-              //      builder: (context, child) {
-              //      return
-              Opacity(
-                opacity: opacityText.value,
-                //        child: child,
-                //     );
-                //   },
+              FadeTransition(
+                opacity: opacityText,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -53,10 +53,12 @@ void main() {
 
     await tester.pump(const Duration(milliseconds: 300));
     double oneFifth = _getOpacity(keyUserAvatar, tester, false);
+
     expect(0.7, (oneFifth * 10).roundToDouble() / 10);
 
     await tester.pump(const Duration(milliseconds: 800));
     double full = _getOpacity(keyUserAvatar, tester, false);
+
     expect(1.0, (full * 10).roundToDouble() / 10);
 
     final keyName = GlobalKey();
