@@ -38,16 +38,16 @@ class LikeButtonState extends State<LikeButton> {
           }
         });
       },
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Row(
-            children: <Widget>[
-              Icon(isLiked ? AppIcons.like_fill : AppIcons.like),
-              SizedBox(width: 4.21),
-              Text('$likeCount'),
-            ],
-          ),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          children: <Widget>[
+            Icon(isLiked ? AppIcons.like_fill : AppIcons.like),
+            SizedBox(width: 4.21),
+            Text(
+              '$likeCount',
+            ),
+          ],
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/screens/photo_screen.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
+//import 'package:FlutterGalleryApp/app.dart';
 
 const String kFlutterDash =
     'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
@@ -42,19 +43,20 @@ class _FeedState extends State<Feed> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FullScreenImage(
-                          photo: kFlutterDash,
-                          heroTag: 'tag$index',
-                          userPhoto:
-                              'https://skill-branch.ru/img/speakers/Adechenko.jpg',
-                          altDescription: 'This is Flutter Dash. I love him :)',
-                          name: 'Kirill Adeshchenko',
-                          userName: 'kaparray',
-                        )));
-            //print('tag$index');
+            Navigator.pushNamed(
+              context,
+              '/fullScreenImage',
+              arguments: FullScreenImageArguments(
+                routeSettings: RouteSettings(arguments: 'Some Photo'),
+                heroTag: 'tag$index',
+                userPhoto:
+                    'http://www.youloveit.ru/uploads/posts/2019-08/1565284946_red4.jpg',
+                altDescription: 'this is flutter dash. i love him :)',
+                name: 'kirill adeshchenko',
+                userName: 'kaparray',
+                photo: kFlutterDash,
+              ),
+            );
           },
           child: Hero(
             tag: 'tag$index',
@@ -70,7 +72,10 @@ class _FeedState extends State<Feed> {
             'This is Flutter Dash. I love him :)',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: AppStyles.h3.copyWith(color: AppColors.black),
+            style: Theme.of(context)
+                .textTheme
+                .headline3
+                .copyWith(color: AppColors.black),
           ),
         )
       ],
@@ -91,10 +96,13 @@ class _FeedState extends State<Feed> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('Kirill Adeshchenko', style: AppStyles.h2Black),
+                  Text('Kirill Adeshchenko',
+                      style: Theme.of(context).textTheme.headline2),
                   Text('@kaparray',
-                      style:
-                          AppStyles.h5Black.copyWith(color: AppColors.manatee)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(color: AppColors.manatee)),
                 ],
               ),
             ],

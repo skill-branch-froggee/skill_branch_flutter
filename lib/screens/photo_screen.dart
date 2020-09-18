@@ -1,8 +1,32 @@
+//import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
+
+class FullScreenImageArguments {
+  final String photo;
+  final String altDescription;
+  final String name;
+  final String userName;
+  final String userPhoto;
+  final String heroTag;
+  final Key key;
+  final RouteSettings routeSettings;
+
+  FullScreenImageArguments({
+    this.routeSettings,
+    this.photo,
+    this.altDescription,
+    this.name,
+    this.userName,
+    this.userPhoto,
+    this.heroTag,
+    this.key,
+  });
+}
 
 class FullScreenImage extends StatefulWidget {
   FullScreenImage(
@@ -37,7 +61,7 @@ class FullScreenImageState extends State<FullScreenImage>
     super.initState();
 
     _controller = AnimationController(
-        duration: Duration(milliseconds: 1500), vsync: this);
+        duration: Duration(milliseconds: 3000), vsync: this);
 
     _playAnimation();
   }
@@ -63,97 +87,178 @@ class FullScreenImageState extends State<FullScreenImage>
     // print(widget.heroTag);
 
     return Scaffold(
-      appBar: _buildAppBar(context),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Hero(
-              // прилетающая картика с др страницы
-              tag: widget.heroTag,
-              child: Photo(
-                photoLink: widget.photo,
-              ),
-            ),
-            Padding(
-              //описание под картинкой
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Text(
-                widget.altDescription,
-                maxLines: 3,
-                style: AppStyles.h3.copyWith(color: AppColors.grayChateau),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+        appBar: _buildAppBar(context),
+        body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Hero(
+                    // прилетающая картика с др страницы
+                    tag: widget.heroTag,
+                    child: Photo(
+                      photoLink: widget.photo,
+                    ),
+                  ),
+                  Padding(
+                    //описание под картинкой
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
+                      widget.altDescription,
+                      maxLines: 3,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(color: AppColors.grayChateau),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  StaggerAnimation(
+                    animationController: _controller,
+                    name: widget.name,
+                    userName: widget.userName,
+                    userPhoto: widget.userPhoto,
+                  ), // аватарка, имя, username анимация прозрачности
 
-            StaggerAnimation(
-              animationController: _controller,
-              name: widget.name,
-              userName: widget.userName,
-              userPhoto: widget.userPhoto,
-            ), // аватарка, имя, username анимация прозрачности
+                  Row(
+                    // строка с кнопками лайков и Text @ Visit
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                          width: 105,
+                          height: 60,
+                          alignment: Alignment.bottomLeft,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          // margin: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.all(Radius.circular(7)),
+                          ),
+                          child: LikeButton(10, true)), // кнопка с лайками
+                      SizedBox(width: 12),
+                      _buildButton('Save', () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Alert Dialog Title"),
+                                  content: Text("Alert Dialog Body"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok')),
+                                    FlatButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancel')),
+                                  ],
+                                ));
+                      }),
+                      SizedBox(width: 12),
+                      _buildButton('Visit', () async {
+                        OverlayState overlayState = Overlay.of(context);
 
-            Row(
-              // строка с кнопками лайков и Text @ Visit
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                LikeButton(10, true), // кнопка с лайками
-                SizedBox(width: 12),
-                GestureDetector(
-                    //behavior: HitTestBehavior.opaque,
-                    onTap: () {},
-                    child: _buildButton('Text')),
-                SizedBox(width: 12),
-                GestureDetector(
-                  //behavior: HitTestBehavior.opaque,
-                  onTap: () {},
-                  child: _buildButton('Visit'),
-                ),
-              ],
-            ),
-          ],
-        ),
+                        OverlayEntry overlayEntry =
+                            OverlayEntry(builder: (BuildContext context) {
+                          return Positioned(
+                              top: MediaQuery.of(context).viewInsets.top + 50,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding:
+                                        EdgeInsets.fromLTRB(16, 10, 16, 10),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.mercury,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Text('Skill Branch'),
+                                  ),
+                                ),
+                              ));
+                        });
+                        overlayState.insert(overlayEntry);
+                        await Future.delayed(Duration(seconds: 1));
+                        overlayEntry.remove();
+                      }),
+                    ],
+                  ),
+                ])));
+  }
+
+  Widget _buildAppBar(context) {
+    String title = ModalRoute.of(context).settings.arguments;
+    return AppBar(
+      elevation: 0,
+      actions: <Widget>[
+        IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.dodgerBlue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(10, (index) => FlutterLogo()),
+                      ),
+                      //      ),
+                    );
+                  });
+            }),
+      ],
+      centerTitle: true,
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.headline2,
       ),
+      leading: IconButton(
+          icon: const Icon(CupertinoIcons.back),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
     );
   }
-}
 
-Widget _buildAppBar(context) {
-  return AppBar(
-    centerTitle: true,
-    title: Text(
-      'Photo',
-      style: AppStyles.h2Black,
-    ),
-    leading: IconButton(
-        icon: const Icon(CupertinoIcons.back),
-        onPressed: () {
-          Navigator.pop(context);
-        }),
-  );
-}
+  Widget _buildButton(String text, VoidCallback callback) {
+    //кнопки
+    return GestureDetector(
+        //behavior: HitTestBehavior.opaque,
+        onTap: callback,
+        child: Container(
+          width: 105,
+          height: 36,
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          // margin: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: AppColors.dodgerBlue,
+            borderRadius: BorderRadius.all(Radius.circular(7)),
+          ),
 
-Widget _buildButton(String text) {
-  //кнопки
-  return Container(
-    width: 105,
-    height: 36,
-    alignment: Alignment.center,
-    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    // margin: EdgeInsets.all(12),
-    decoration: BoxDecoration(
-      shape: BoxShape.rectangle,
-      color: AppColors.dodgerBlue,
-      borderRadius: BorderRadius.all(Radius.circular(7)),
-    ),
-
-    child: Text(
-      text,
-      style: AppStyles.h4.copyWith(color: AppColors.white),
-    ),
-  );
+          child: Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .headline4
+                .copyWith(color: AppColors.white),
+          ),
+        ));
+  }
 }
 
 class StaggerAnimation extends StatelessWidget {
@@ -221,9 +326,11 @@ class StaggerAnimation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(name, style: AppStyles.h1Black),
+                    Text(name, style: Theme.of(context).textTheme.headline1),
                     Text('@$userName',
-                        style: AppStyles.h5Black
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
                             .copyWith(color: AppColors.manatee)),
                   ],
                 ),

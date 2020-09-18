@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:FlutterGalleryApp/res/app_icons.dart';
 
+import 'demo_screen.dart';
 import 'feed_screen.dart';
 
 class Home extends StatefulWidget {
@@ -21,10 +22,16 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavyBar(
         itemCornerRadius: 8,
         curve: Curves.ease,
-        onItemSelected: (int index) {
-          setState(() {
-            currentTab = index;
-          });
+        onItemSelected: (int index) async {
+          if (index == 1) {
+            var value = await Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Demo()));
+            print(value);
+          } else {
+            setState(() {
+              currentTab = index;
+            });
+          }
         },
         currentTab: currentTab,
         items: [
