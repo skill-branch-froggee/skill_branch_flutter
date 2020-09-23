@@ -107,10 +107,7 @@ class FullScreenImageState extends State<FullScreenImage>
                     child: Text(
                       widget.altDescription,
                       maxLines: 3,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          .copyWith(color: AppColors.grayChateau),
+                      style: Theme.of(context).textTheme.headline3,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -205,18 +202,7 @@ class FullScreenImageState extends State<FullScreenImage>
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.dodgerBlue,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(10, (index) => FlutterLogo()),
-                      ),
-                      //      ),
-                    );
+                    return ClaimBottomSheet();
                   });
             }),
       ],

@@ -69,7 +69,7 @@ class _FeedState extends State<Feed> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Text(
-            'This is Flutter Dash. I love him :)',
+            'This is Flutter Dash. I   him :)',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context)
