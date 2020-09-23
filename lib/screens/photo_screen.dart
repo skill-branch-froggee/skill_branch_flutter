@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 class FullScreenImageArguments {
   final String photo;
@@ -139,19 +140,23 @@ class FullScreenImageState extends State<FullScreenImage>
                         showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                                  title: Text("Alert Dialog Title"),
-                                  content: Text("Alert Dialog Body"),
+                                  title: Text("Downloading photos"),
+                                  content: Text(
+                                      "Are you sure you want to upload a photo?"),
                                   actions: <Widget>[
                                     FlatButton(
                                         onPressed: () {
-                                          Navigator.of(context).pop();
+                                          GallerySaver.saveImage(widget.photo)
+                                              .then((bool success) {
+                                            Navigator.of(context).pop();
+                                          });
                                         },
-                                        child: Text('Ok')),
+                                        child: Text('Download')),
                                     FlatButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('Cancel')),
+                                        child: Text('Close')),
                                   ],
                                 ));
                       }),

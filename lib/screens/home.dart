@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:FlutterGalleryApp/res/app_icons.dart';
 
-import 'demo_screen.dart';
+//import 'demo_screen.dart';
 import 'feed_screen.dart';
 
 class Home extends StatefulWidget {
