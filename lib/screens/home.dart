@@ -23,15 +23,15 @@ class _HomeState extends State<Home> {
         itemCornerRadius: 8,
         curve: Curves.ease,
         onItemSelected: (int index) async {
-          if (index == 1) {
-            var value = await Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Demo()));
-            print(value);
-          } else {
-            setState(() {
-              currentTab = index;
-            });
-          }
+          //   if (index == 1) {
+          //     var value = await Navigator.push(
+          //         context, MaterialPageRoute(builder: (context) => Demo()));
+          //     print(value);
+          //   } else {
+          setState(() {
+            currentTab = index;
+          });
+          //   }
         },
         currentTab: currentTab,
         items: [
