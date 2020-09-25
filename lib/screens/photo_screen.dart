@@ -30,15 +30,17 @@ class FullScreenImageArguments {
 }
 
 class FullScreenImage extends StatefulWidget {
-  FullScreenImage(
-      {this.photo = '',
-      this.altDescription = '',
-      this.name = '',
-      this.userName = '',
-      Key key,
-      this.heroTag = '',
-      this.userPhoto = ''})
-      : super(key: key);
+  FullScreenImage({
+    this.photo,
+    this.altDescription,
+    this.name,
+    this.userName,
+    Key key,
+    this.heroTag,
+    this.userPhoto,
+    this.likeCount,
+    this.isLiked,
+  }) : super(key: key);
 
   final String photo;
   final String altDescription;
@@ -46,6 +48,8 @@ class FullScreenImage extends StatefulWidget {
   final String userName;
   final String userPhoto;
   final String heroTag;
+  final int likeCount;
+  final bool isLiked;
 
   @override
   State<StatefulWidget> createState() {
@@ -126,14 +130,6 @@ class FullScreenImageState extends State<FullScreenImage>
                       Container(
                           width: 105,
                           height: 60,
-                          alignment: Alignment.bottomLeft,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          // margin: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                          ),
                           child: LikeButton(10, true)), // кнопка с лайками
                       SizedBox(width: 12),
                       _buildButton('Save', () {
@@ -213,7 +209,7 @@ class FullScreenImageState extends State<FullScreenImage>
       ],
       centerTitle: true,
       title: Text(
-        title,
+        title ?? 'Photo',
         style: Theme.of(context).textTheme.headline2,
       ),
       leading: IconButton(
@@ -242,7 +238,7 @@ class FullScreenImageState extends State<FullScreenImage>
           ),
 
           child: Text(
-            text,
+            text ?? 'default value',
             style: Theme.of(context)
                 .textTheme
                 .headline4
@@ -260,14 +256,22 @@ class StaggerAnimation extends StatelessWidget {
   final String name;
   final String userName;
   final String userPhoto;
+  //final int likeCount;
+  //final bool isLiked;
+  // final String photo;
+  //final String altDescription;
 
-  StaggerAnimation(
-      {Key key,
-      this.animationController,
-      this.name,
-      this.userName,
-      this.userPhoto})
-      : opacityUserAvatar = Tween<double>(begin: 0.0, end: 1.0).animate(
+  StaggerAnimation({
+    Key key,
+    this.animationController,
+    this.name, // = '',
+    this.userName, //= '',
+    this.userPhoto, // = '',
+    // this.likeCount = 0,
+    // this.isLiked = false,
+    //  this.photo = '',
+    // this.altDescription = '',
+  })  : opacityUserAvatar = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animationController,
             curve: Interval(0.0, 0.5, curve: Curves.ease),
@@ -290,15 +294,6 @@ class StaggerAnimation extends StatelessWidget {
   }
 
   Widget _buildPhotoMetaData(BuildContext context, Widget child) {
-    // ghjdthrf pyfxtybq
-
-    // double a, b, c, d;
-    //   a = animationController.value;
-    //   b = opacityUserAvatar.value;
-    //   print('$a - OpacityUserAvatar $b');
-    //  c = animationController.value;
-    // d = opacityText.value;
-    //print('$c - opacityText $d');
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(

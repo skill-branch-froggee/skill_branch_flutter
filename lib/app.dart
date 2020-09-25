@@ -4,7 +4,7 @@ import 'package:FlutterGalleryApp/screens/photo_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//import 'package:connectivity/connectivity.dart';
+import 'package:connectivity/connectivity.dart';
 
 import 'package:FlutterGalleryApp/res/res.dart';
 
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           }
         }
       },
-      home: Home(),
+      home: Home(Connectivity().onConnectivityChanged),
     );
   }
 }

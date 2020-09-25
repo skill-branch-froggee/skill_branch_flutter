@@ -37,7 +37,7 @@ class ClaimBottomSheet extends StatelessWidget {
         constraints: BoxConstraints.tightForFinite(height: 40),
         alignment: Alignment.center,
         child: Text(
-          claim[index].toUpperCase(),
+          claim[index].toUpperCase() ?? 'default value',
           style: Theme.of(context).textTheme.headline2,
         ),
       ),

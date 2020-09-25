@@ -47,7 +47,7 @@ class _FeedState extends State<Feed> {
               context,
               '/fullScreenImage',
               arguments: FullScreenImageArguments(
-                routeSettings: RouteSettings(arguments: 'Some Photo'),
+                routeSettings: RouteSettings(arguments: 'Some Photo1'),
                 heroTag: 'tag$index',
                 userPhoto:
                     'http://www.youloveit.ru/uploads/posts/2019-08/1565284946_red4.jpg',
