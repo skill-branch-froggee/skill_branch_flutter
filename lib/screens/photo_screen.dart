@@ -106,6 +106,7 @@ class FullScreenImageState extends State<FullScreenImage>
                       photoLink: widget.photo,
                     ),
                   ),
+
                   Padding(
                     //описание под картинкой
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -158,34 +159,7 @@ class FullScreenImageState extends State<FullScreenImage>
                       }),
                       SizedBox(width: 12),
                       _buildButton('Visit', () async {
-                        OverlayState overlayState = Overlay.of(context);
-
-                        OverlayEntry overlayEntry =
-                            OverlayEntry(builder: (BuildContext context) {
-                          return Positioned(
-                              top: MediaQuery.of(context).viewInsets.top + 50,
-                              child: Material(
-                                color: Colors.transparent,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    padding:
-                                        EdgeInsets.fromLTRB(16, 10, 16, 10),
-                                    decoration: BoxDecoration(
-                                        color: AppColors.mercury,
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Text('Skill Branch'),
-                                  ),
-                                ),
-                              ));
-                        });
-                        overlayState.insert(overlayEntry);
-                        await Future.delayed(Duration(seconds: 1));
-                        overlayEntry.remove();
+                        
                       }),
                     ],
                   ),

@@ -7,6 +7,8 @@ import 'package:FlutterGalleryApp/res/app_icons.dart';
 import 'package:connectivity/connectivity.dart';
 
 //import 'demo_screen.dart';
+import '../app.dart';
+
 import 'feed_screen.dart';
 
 class Home extends StatefulWidget {
@@ -20,7 +22,7 @@ class Home extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   List<Widget> pages = [Feed(), Container(), Container()];
   int currentTab = 0;
 
@@ -32,14 +34,41 @@ class _HomeState extends State<Home> {
     subscription =
         widget.onConnectivityChanged.listen((ConnectivityResult result) {
       switch (result) {
-        case ConnectivityResult.wifi:
+       case ConnectivityResult.wifi:
+// Вызовете удаление Overlay тут
+     //    print('internet wifi');
+         ConnectivityOverlay().removeOverlay(context);
+         break;
+      
+       case ConnectivityResult.mobile:
+          //  print('internet mobile');
+            
+         (ConnectivityOverlay()).removeOverlay(context);
 // Вызовете удаление Overlay тут
           break;
-        case ConnectivityResult.mobile:
-// Вызовете удаление Overlay тут
-          break;
-        case ConnectivityResult.none:
 // Вызовете отображения Overlay тут
+        case ConnectivityResult.none:
+        //        print('internet none');              
+          ConnectivityOverlay().showOverlay(context,
+           Positioned(
+             top: MediaQuery.of(context).viewInsets.top + 50,
+             child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                           alignment: Alignment.center,
+                           width: MediaQuery.of(context).size.width,
+                           child: Container(
+                                decoration: BoxDecoration(
+                                   color: AppColors.dodgerBlue,
+                                   borderRadius: BorderRadius.circular(12),
+                                   ),
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+                                child: Text('No internet connection'),
+                                ),
+                     ),
+                 ),
+           ));
           break;
       }
     });
@@ -47,8 +76,9 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    subscription.cancel();
+  
     super.dispose();
+      subscription.cancel();
   }
 
   @override

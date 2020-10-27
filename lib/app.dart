@@ -46,3 +46,34 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class ConnectivityOverlay {
+  static final ConnectivityOverlay _singleton = ConnectivityOverlay._internal();
+
+  factory ConnectivityOverlay() {
+    return _singleton;
+  }
+
+  ConnectivityOverlay._internal();
+
+  static OverlayEntry overlayEntry;
+
+  void showOverlay(BuildContext context, Widget child) {
+    // реализуйте отображение Overlay.
+    OverlayState overlayState = Overlay.of(context);
+
+    overlayEntry = OverlayEntry(builder: (BuildContext context) =>
+       child);
+
+    overlayState.insert(overlayEntry);
+    print(overlayEntry);
+    //await Future.delayed(Duration(seconds: 3));
+  }
+
+  void removeOverlay(BuildContext context) {
+// реализуйте удаление Overlay.
+    print(overlayEntry);
+    overlayEntry?.remove();
+    print(overlayEntry);
+  }
+}
